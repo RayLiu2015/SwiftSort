@@ -27,6 +27,8 @@
                                     <segment title="冒泡排序"/>
                                     <segment title="选择排序"/>
                                     <segment title="插入排序"/>
+                                    <segment title="快速排序"/>
+                                    <segment title="堆排序"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="glq-g2-6FU"/>
@@ -64,6 +66,11 @@
                                 <action selector="sortAct:" destination="BYZ-38-t0r" id="r9q-5M-18u"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="重置" id="QlC-r2-aSe">
+                            <connections>
+                                <action selector="resetAct:" destination="BYZ-38-t0r" id="3ug-n3-DwZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="segment" destination="SBO-id-0g4" id="tby-g8-apP"/>
@@ -73,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="911" y="116"/>
+            <point key="canvasLocation" x="575" y="43"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="A9u-kW-YZ1">

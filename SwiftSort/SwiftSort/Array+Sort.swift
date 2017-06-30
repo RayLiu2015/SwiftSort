@@ -53,6 +53,77 @@ extension Array{
             }
         }
     }
+    mutating func quickSort(order: ComparisonResult) -> @noescape (_ compare: Compare, _ compared: Compared) -> Void {
+        return { (compare, compared) -> Void in
+            self.quickSort(order: order, lowIndex: 0, highIndex: self.count - 1, compare: compare, compared: compared)
+        }
+    }
+    private mutating func quickSort(order: ComparisonResult, lowIndex: Int, highIndex: Int, compare: Compare, compared: Compared) {
+        guard highIndex > lowIndex else{
+            return
+        }
+        var middle = lowIndex
+        let base = self[lowIndex]
+        var low = lowIndex
+        var high = highIndex
+        while high > low {
+            while high > low {
+                let compareResult = compare(base, self[high])
+                if compareResult == order || compareResult == .orderedSame{
+                    high -= 1
+                }else{
+                    break
+                }
+            }
+            
+            if high > low{
+                exchange(indexA: low, indexB: high, compared: compared)
+                low += 1
+            }
+            while high > low && compare(base, self[low]) != order{
+                low += 1
+            }
+            if high > low{
+                exchange(indexA: low, indexB: high, compared: compared)
+            }
+        }
+        middle = low
+        quickSort(order: order, lowIndex: middle + 1, highIndex: highIndex, compare: compare, compared: compared)
+        quickSort(order: order, lowIndex: lowIndex, highIndex:middle - 1, compare: compare, compared: compared)
+        
+    }
+    
+    
+    mutating func heapSort(order: ComparisonResult) -> @noescape (_ compare: Compare, _ compared: Compared) -> Void{
+        return { (compare, compared) -> Void in
+            func sort(start: Int, end: Int, compare: Compare, compared: Compared){
+                var index = start
+                var inStart = index * 2 + 1
+                while inStart <= end {
+                    if inStart < end && compare(self[inStart], self[inStart + 1]) == order{
+                    inStart += 1
+                    }
+                    if compare(self[index], self[inStart]) != order{
+                        break
+                    }
+                    exchange(indexA: index, indexB: inStart, compared: compared)
+                    index = inStart
+                    inStart = inStart * 2 + 1
+                }
+            }
+            for i in  (0...(count-1)/2).reversed(){
+                sort(start: i, end: self.count - 1, compare: compare, compared: compared)
+            }
+        
+            for index in (0..<count).reversed() {
+                self.exchange(indexA: 0, indexB: index, compared: compared)
+                sort(start: 0, end: index - 1, compare: compare, compared: compared)
+            }
+        }
+    }
+    
+   
+    
     
     mutating func twoSort(_ compare: (_ ele1: Element, _ ele2: Element) -> Bool,  compared:(_ ele1: Element, _ ele2: Element) -> ()){
         guard count > 0 else{
@@ -81,11 +152,17 @@ extension Array{
         }
     }
     
+    
+    
+    
     private mutating func exchange(indexA: Int, indexB: Int, compared:Compared){
         let ele = self[indexA]
         self[indexA] = self[indexB]
         self[indexB] = ele
         compared(ele, self[indexA])
     }
+    
+    
+    
     
 }

@@ -51,6 +51,10 @@ class ViewController: UIViewController {
         reset()
     }
     
+    @IBAction func resetAct(_ sender: Any) {
+        reset()
+    }
+    
     @IBAction func sortAct(_ sender: Any){
         self.navigationItem.leftBarButtonItem?.isEnabled = false
         sem = DispatchSemaphore(value: 0)
@@ -68,6 +72,10 @@ class ViewController: UIViewController {
                 self.selectionSort()
             case 2:
                 self.insertSort()
+            case 3:
+                self.quickSort()
+            case 4:
+                self.heapSort()
             default:
                 break
             }
@@ -78,6 +86,7 @@ class ViewController: UIViewController {
             }
         }
     }
+    
     @IBAction func segmentChange(_ sender: Any) {
         reset()
     }
@@ -103,6 +112,21 @@ class ViewController: UIViewController {
            self.compared(v1: $0, v2: $1)
         })
     }
+    func quickSort(){
+        barArr.quickSort(order: .orderedAscending)({
+            self.compare(v1: $0, v2: $1)
+        },{
+            self.compared(v1: $0, v2: $1)
+        })
+    }
+    func heapSort(){
+        barArr.heapSort(order: .orderedAscending)({
+            self.compare(v1: $0, v2: $1)
+        },{
+            self.compared(v1: $0, v2: $1)
+        })
+    }
+    
 //    func twoSort() {
 //        var arr = [3,5,1,5,23,7,123,34,454,234,46,7,34,3]
 //        arr.twoSort({ (i1, i2) -> Bool in
